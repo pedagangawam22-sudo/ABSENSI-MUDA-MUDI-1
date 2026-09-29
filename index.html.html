@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Absensi Muda Mudi</title>
+<style>
+:root{--navy:#102b49;--blue:#0878e8;--bg:#f3f7fb;--line:#dce6f0;--text:#19324d;--muted:#6b7f93;--green:#16a765;--yellow:#f3b51b;--red:#ed4264;--gray:#aab7c4}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--text)}button,input,select{font:inherit}button{cursor:pointer;border:0;border-radius:8px;padding:10px 13px;background:var(--blue);color:white;font-weight:600}button.secondary{background:#e8f1fa;color:var(--navy);border:1px solid var(--line)}button.danger{background:#fff0f2;color:#d62e4e;border:1px solid #ffd4dc}button.small{padding:6px 9px;font-size:12px}.hidden{display:none!important}
+.login{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,#102b49,#1763a0);padding:20px}.login-card{width:min(420px,100%);background:white;border-radius:18px;padding:30px;box-shadow:0 20px 60px #001b3c66;text-align:center}.logo{width:76px;height:76px;border-radius:50%;object-fit:cover;background:#eaf3fb;border:2px solid #d5e5f4;margin:0 auto 10px;display:grid;place-items:center;font-size:28px;color:#0878e8}.login h1{margin:8px 0 5px}.login p{color:var(--muted);margin:0 0 22px}.login input{width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;margin:8px 0 12px}.login button{width:100%}.error{color:#d62e4e;font-size:13px;min-height:18px;margin-bottom:5px}
+.app{display:flex;min-height:100vh}.sidebar{width:225px;background:var(--navy);color:white;padding:20px 13px;display:flex;flex-direction:column;gap:7px;flex-shrink:0}.brand{display:flex;align-items:center;gap:10px;padding:5px 8px 22px;font-weight:bold;font-size:17px}.brand .logo{width:40px;height:40px;margin:0;font-size:18px;border:0}.nav{width:100%;text-align:left;background:transparent;color:#d9e7f5;font-weight:500}.nav.active,.nav:hover{background:#0878e8;color:white}.nav.logout{margin-top:auto}.main{flex:1;min-width:0;padding:25px}.top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:20px}.top h2{margin:0 0 4px}.muted{color:var(--muted);font-size:13px}.card{background:white;border:1px solid var(--line);border-radius:12px;padding:17px;margin-bottom:18px;box-shadow:0 2px 8px #18365308}.hero{min-height:160px;border-radius:12px;background:linear-gradient(100deg,#173e61,#397eb1);color:white;padding:24px;display:flex;align-items:end;justify-content:space-between;background-size:cover;background-position:center;gap:12px}.hero h2{margin:0 0 8px}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.stat{text-align:center}.ring{width:112px;height:112px;border-radius:50%;margin:12px auto;background:conic-gradient(var(--ring-color) var(--pct),#ed4264 0);display:grid;place-items:center;position:relative}.ring:before{content:"";position:absolute;inset:10px;background:white;border-radius:50%}.ring span{z-index:1;font-size:23px;font-weight:bold}.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.row.spread{justify-content:space-between}.row input,.row select,.field{padding:9px;border:1px solid var(--line);border-radius:7px;background:white;color:var(--text)}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:9px}table{border-collapse:collapse;width:100%;min-width:650px;background:white}th,td{padding:9px 10px;border-bottom:1px solid #e8eef4;text-align:left;font-size:13px;white-space:nowrap}th{background:#edf4fa;color:#25415d;position:sticky;top:0;z-index:1}td.center,th.center{text-align:center}.status{width:26px;height:26px;border-radius:50%;padding:0;border:2px solid white;box-shadow:0 0 0 1px #cbd6e0;display:inline-block;background:#e9eef3}.status.hadir{background:var(--green)}.status.izin{background:var(--yellow)}.status.sakit{background:#0878e8}.status.tk{background:var(--red)}.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:#536b80;margin-top:12px}.dot{width:11px;height:11px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:middle}.dot.hadir{background:var(--green)}.dot.izin{background:var(--yellow)}.dot.sakit{background:var(--red)}.dot.tk{background:#cbd5df}.notice{padding:11px 13px;border-radius:8px;background:#edf6ff;color:#315b80;font-size:13px;margin-top:12px}.section-title{margin:0 0 13px}.empty{padding:25px;text-align:center;color:var(--muted)}.tag{background:#e7f2ff;color:#086acb;border-radius:20px;padding:5px 10px;font-size:12px}.datecol{min-width:62px;text-align:center}.danger-text{color:#d62e4e}.filelabel{display:inline-block;padding:9px 12px;background:#e8f1fa;color:var(--navy);border-radius:8px;cursor:pointer;font-size:13px;font-weight:bold}.filelabel input{display:none}
+@media(max-width:800px){.sidebar{width:64px;padding:12px 7px}.brand{justify-content:center;padding:5px 0 18px}.brand span,.nav .label{display:none}.nav{text-align:center;font-size:18px;padding:12px 4px}.main{padding:16px}.stats{grid-template-columns:1fr}.top{align-items:flex-start}.hero{min-height:130px}}
+</style>
+</head>
+<body>
+<div id="login" class="login">
+ <div class="login-card">
+  <img id="loginLogo" class="logo hidden" alt="Logo">
+  <div id="loginLogoPlaceholder" class="logo">✦</div>
+  <h1>Absensi Muda Mudi</h1><p>Bersama dalam kebersamaan</p>
+  <form id="loginForm"><input id="password" type="password" placeholder="Masukkan password" autocomplete="current-password"><div class="error" id="loginError"></div><button type="submit">Masuk</button></form>
+  <div style="margin-top:14px"><label class="filelabel">Ganti Logo <input type="file" accept="image/*" id="logoUpload"></label></div>
+ </div>
+</div>
+<div id="app" class="app hidden">
+ <aside class="sidebar">
+  <div class="brand"><div class="logo" id="sideLogo">✦</div><span>Absensi<br>Muda Mudi</span></div>
+  <button class="nav active" data-page="home">⌂ <span class="label">Beranda</span></button>
+  <button class="nav" data-page="muda">♙ <span class="label">Absensi Muda</span></button>
+  <button class="nav" data-page="mudi">♧ <span class="label">Absensi Mudi</span></button>
+  <button class="nav" data-page="years">▦ <span class="label">Tahun</span></button>
+  <button class="nav" data-page="schedule">▣ <span class="label">Jadwal</span></button>
+  <button class="nav" data-page="settings">⚙ <span class="label">Profil / Logo</span></button>
+  <button class="nav logout" id="logout">⇥ <span class="label">Keluar</span></button>
+ </aside>
+ <main class="main">
+  <div id="page-home">
+   <div class="top"><div><h2>Selamat Datang</h2><div class="muted">Aplikasi Absensi Muda Mudi</div></div><div class="row"><label class="muted">Tahun</label><select id="homeYear"></select></div></div>
+   <div class="hero" id="hero"><div><h2>Absensi Muda Mudi</h2><div>Kebersamaan dimulai dari kehadiran.</div></div><label class="filelabel">Ganti Gambar <input type="file" accept="image/*" id="heroUpload"></label></div>
+   <div class="card" style="margin-top:18px"><h3 class="section-title">Persentase Kehadiran Bulanan</h3><div class="row" style="margin-bottom:12px"><label class="muted" for="homeMonth">Bulan</label><select id="homeMonth"></select></div><div class="stats" id="monthlyStats"></div></div>
+   <div class="card"><h3 class="section-title">Rekap Kehadiran Tahunan <span class="muted">(Januari–Desember)</span></h3><div class="stats" id="annualStats"></div><div class="notice">Persentase dihitung dari jadwal yang dibuat. Bagian merah pada diagram menunjukkan ketidakhadiran (kolom absensi yang kosong).</div></div>
+  </div>
+  <div id="page-attendance" class="hidden">
+   <div class="top"><div><h2 id="attTitle">Absensi Muda</h2><div class="muted">Klik titik pada tanggal untuk mengganti status kehadiran.</div></div><div class="row"><select id="attYear"></select><select id="attMonth"></select><button id="addPerson">＋ Tambah Nama</button></div></div>
+   <div class="card"><div class="row spread" style="margin-bottom:12px"><strong id="monthLabel"></strong><span class="tag" id="personCount"></span></div><div class="table-wrap"><table id="attendanceTable"></table></div><div class="legend"><span><i class="dot hadir"></i>Hadir</span><span><i class="dot izin"></i>Izin</span><span><i class="dot sakit" style="background:#0878e8"></i>Sakit</span><span>Kosong = tidak hadir / tanpa keterangan</span></div><div class="notice">Urutan nama otomatis berdasarkan abjad. Menghapus nama berlaku mulai bulan yang dipilih; data bulan sebelumnya tetap tersimpan.</div></div>
+  </div>
+  <div id="page-years" class="hidden">
+   <div class="top"><div><h2>Pengelolaan Tahun</h2><div class="muted">Setiap tahun memiliki data absensi Januari sampai Desember.</div></div><button id="addYear">＋ Tambah Tahun</button></div>
+   <div class="card"><div class="table-wrap"><table><thead><tr><th>NO</th><th>TAHUN</th><th>AKSI</th></tr></thead><tbody id="yearRows"></tbody></table></div><div class="notice">Menghapus tahun akan menghapus data absensi dan jadwal pada tahun tersebut.</div></div>
+  </div>
+  <div id="page-schedule" class="hidden">
+   <div class="top"><div><h2>Jadwal Absensi</h2><div class="muted">Tambahkan tanggal kegiatan untuk bulan yang dipilih.</div></div><div class="row"><select id="scheduleYear"></select><select id="scheduleMonth"></select><button id="addSchedule">＋ Tambah Jadwal</button></div></div>
+   <div class="card">
+    <h3 id="scheduleLabel" class="section-title"></h3>
+    <div class="row" style="margin-bottom:14px;align-items:end">
+      <div><label class="muted" for="newScheduleDate">Tanggal kegiatan</label><br><input class="field" type="date" id="newScheduleDate"></div>
+      <div style="flex:1;min-width:180px"><label class="muted" for="newScheduleName">Nama kegiatan</label><br><input class="field" style="width:100%" id="newScheduleName" placeholder="Contoh: Pertemuan rutin"></div>
+      <button type="button" id="saveSchedule">Simpan Jadwal</button>
+    </div>
+    <div class="table-wrap"><table><thead><tr><th>NO</th><th>TANGGAL</th><th>KEGIATAN</th><th>AKSI</th></tr></thead><tbody id="scheduleRows"></tbody></table></div>
+    <div class="notice">Tanggal jadwal akan menjadi kolom pada tabel absensi bulan tersebut.</div>
+  </div>
+  </div>
+  <div id="page-settings" class="hidden">
+   <div class="top"><div><h2>Pengaturan</h2><div class="muted">Atur tampilan aplikasi.</div></div></div>
+   <div class="card"><h3 class="section-title">Profil / Logo Aplikasi</h3>
+    <div class="row" style="align-items:center">
+      <div id="profileLogoPreview" class="logo" style="margin:0;width:76px;height:76px;overflow:hidden">✦</div>
+      <div><div><strong>Logo aplikasi</strong></div><div class="muted">Logo akan tampil di halaman login dan menu samping.</div></div>
+      <label class="filelabel">Ganti Logo <input type="file" accept="image/*" id="logoUploadSettings"></label>
+      <button class="secondary" id="removeLogo">Hapus Logo</button>
+    </div>
+  </div>
+   <div class="card"><h3 class="section-title">Gambar Beranda</h3><div class="row"><label class="filelabel">Pilih Gambar <input type="file" accept="image/*" id="heroUploadSettings"></label><button class="secondary" id="removeHero">Hapus Gambar</button></div></div>
+   <div class="card"><h3 class="section-title">Koneksi Supabase</h3>
+    <p class="muted">Isi URL project dan anon/public key dari Supabase. Koneksi online aktif setelah disimpan dan halaman dimuat ulang.</p>
+    <label>Project URL <input id="supabaseUrl" type="url" placeholder="https://xxxx.supabase.co" style="width:100%;margin:6px 0 12px"></label>
+    <label>Anon / Publishable key <input id="supabaseKey" type="password" placeholder="sb_publishable_..." style="width:100%;margin:6px 0 12px"></label>
+    <div class="row"><button id="saveSupabase">Simpan Koneksi</button><span id="cloudStatus" class="muted">Belum dikonfigurasi</span></div>
+    <p class="muted">Buat tabel <code>app_state</code> di Supabase dengan kolom <code>id</code> (int8, primary key) dan <code>data</code> (jsonb). Jangan gunakan service_role/secret key di browser.</p>
+  </div>
+  <div class="card"><h3 class="section-title">Data Aplikasi</h3><p class="muted">Data tersimpan di browser/perangkat ini menggunakan penyimpanan lokal. Gunakan fitur ekspor untuk membuat cadangan.</p><div class="row"><button id="exportData">Ekspor Cadangan JSON</button><label class="filelabel">Impor Cadangan JSON <input type="file" accept=".json,application/json" id="importData"></label><button class="danger" id="resetData">Reset Semua Data</button></div></div>
+  </div>
+ </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const initial={
+ years:[2026],
+ people:{
+  muda:["ABIZAR","AFAN","BILLY","DENI","DINU","DONI","FAQIH","FURQON","HAFID","HAFIDH (PAK.UDIN)","HUSEN","Ikhsan (AAN)","ILHAM","KELIK","MUKSIN","ROSYID","SULTON AZKA","TYA","YUSUF","Afan II","Hasan","Iqbal"].map((name,i)=>({id:"m"+i,name:name.toUpperCase(),from:"2026-01",to:null})),
+  mudi:["ASRI","AURA","AUREL","CHELSEA","DELIA","DIANA","DINI","EVA","FIRDA","GALIH","LAILY","LUMA","MELANI","NADYA","NINDI","PUTRI","SEKAR","SHINTA","SILVI","TIA","WIDYA","YESSI","Nia"].map((name,i)=>({id:"f"+i,name:name.toUpperCase(),from:"2026-01",to:null}))
+ },
+ schedules:{}, attendance:{}, logo:null,hero:null
+};
+let data;
+try{data=JSON.parse(localStorage.getItem("absenMudaMudi"))||structuredClone(initial)}catch(e){data=structuredClone(initial)}
+const $=id=>document.getElementById(id), months=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+let page="home",group="muda",year=2026,month=8;
+let supabaseClient=null, cloudReady=false, saveTimer=null;
+function save(){
+  localStorage.setItem("absenMudaMudi",JSON.stringify(data));
+  if(supabaseClient && cloudReady){
+    clearTimeout(saveTimer);
+    saveTimer=setTimeout(async()=>{
+      try{
+        const {error}=await supabaseClient.from("app_state").upsert({id:1,data},{onConflict:"id"});
+        if(error) throw error;
+        setCloudStatus("Tersimpan online ✓");
+      }catch(e){setCloudStatus("Gagal menyimpan online: "+(e.message||"periksa koneksi"))}
+    },350);
+  }
+}
+function setCloudStatus(msg){const el=$("cloudStatus");if(el)el.textContent=msg}
+function connectSupabase(){
+  const url=localStorage.getItem("absenSupabaseUrl")||"";
+  const key=localStorage.getItem("absenSupabaseKey")||"";
+  if(!url||!key||!window.supabase){supabaseClient=null;cloudReady=false;setCloudStatus("Belum dikonfigurasi");return}
+  try{supabaseClient=window.supabase.createClient(url,key);setCloudStatus("Terhubung; memuat data…")}
+  catch(e){supabaseClient=null;cloudReady=false;setCloudStatus("Konfigurasi tidak valid")}
+}
+async function loadCloudData(){
+  connectSupabase();
+  if(!supabaseClient)return;
+  try{
+    const {data:row,error}=await supabaseClient.from("app_state").select("data").eq("id",1).maybeSingle();
+    if(error)throw error;
+    if(row && row.data){data=row.data;localStorage.setItem("absenMudaMudi",JSON.stringify(data));}
+    else {const {error:insertError}=await supabaseClient.from("app_state").insert({id:1,data});if(insertError)throw insertError;}
+    cloudReady=true;setCloudStatus("Data online tersinkron ✓");
+    renderImages();fillYears("homeYear",year);monthOptions("homeMonth",month);fillYears("attYear",year);monthOptions("attMonth",month);fillYears("scheduleYear",year);monthOptions("scheduleMonth",month);showPage(page);
+  }catch(e){cloudReady=false;setCloudStatus("Belum tersambung: "+(e.message||"periksa tabel dan kebijakan"))}
+}
+function key(y,m){return `${y}-${String(m+1).padStart(2,"0")}`}
+function sortPeople(g){return data.people[g].filter(p=>p.from<=key(year,month)&&(!p.to||key(year,month)<p.to)).sort((a,b)=>a.name.localeCompare(b.name,"id"))}
+function allSchedule(y,m){return (data.schedules[key(y,m)]||[]).slice().sort((a,b)=>a.date.localeCompare(b.date))}
+function fillYears(id,selected){$(id).innerHTML=data.years.slice().sort((a,b)=>a-b).map(y=>`<option value="${y}" ${y==selected?"selected":""}>${y}</option>`).join("")}
+function monthOptions(id,selected){$(id).innerHTML=months.map((m,i)=>`<option value="${i}" ${i==selected?"selected":""}>${m}</option>`).join("")}
+function showPage(p){page=p;["home","attendance","years","schedule","settings"].forEach(x=>$("page-"+x).classList.toggle("hidden",x!==p));document.querySelectorAll(".nav[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===p||(p==="attendance"&&b.dataset.page===group)));if(p==="home")renderHome();if(p==="attendance")renderAttendance();if(p==="years")renderYears();if(p==="schedule")renderSchedule()}
+document.querySelectorAll(".nav[data-page]").forEach(b=>b.onclick=()=>{if(b.dataset.page==="muda"||b.dataset.page==="mudi"){group=b.dataset.page;year=+$("attYear").value||year;month=+$("attMonth").value||month;showPage("attendance")}else showPage(b.dataset.page)});
+$("loginForm").onsubmit=async e=>{e.preventDefault();if($("password").value==="313354"){$("login").classList.add("hidden");$("app").classList.remove("hidden");showPage("home");await loadCloudData()}else $("loginError").textContent="Password salah."};
+$("logout").onclick=()=>{$("app").classList.add("hidden");$("login").classList.remove("hidden");$("password").value=""};
+function renderHome(){
+  fillYears("homeYear",year);
+  monthOptions("homeMonth",month);
+  $("homeYear").onchange=()=>{year=+$("homeYear").value;renderHome()};
+  $("homeMonth").onchange=()=>{month=+$("homeMonth").value;renderHome()};
+  const summary=(g,monthsToCount)=>{
+    let possible=0; const counts={hadir:0,izin:0,sakit:0,tk:0};
+    for(const m of monthsToCount){
+      const k=key(year,m),sched=data.schedules[k]||[];
+      const people=data.people[g].filter(p=>p.from<=k&&(!p.to||k<p.to));
+      possible+=sched.length*people.length;
+      for(const p of people) for(const s of sched){
+        const st=data.attendance[`${g}|${p.id}|${k}|${s.id}`]||"tk";
+        counts[st==="hadir"||st==="izin"||st==="sakit"?st:"tk"]++;
+      }
+    }
+    const pct=Object.fromEntries(Object.entries(counts).map(([k,v])=>[k,possible?Math.round(v/possible*100):0]));
+    return {pct:possible?Math.round(counts.hadir/possible*100):0,counts,breakdown:pct,possible};
+  };
+  const renderStats=(target,items)=>{
+    $(target).innerHTML=items.map(([n,s,c])=>`<div class="stat"><b>${n}</b><div class="ring" style="--pct:${s.pct}%;--ring-color:${c}"><span>${s.pct}%</span></div><div class="muted">Kehadiran: ${s.pct}%</div><div class="legend" style="justify-content:center;gap:9px;margin-top:10px">
+      <span><i class="dot hadir"></i>Hadir ${s.breakdown.hadir}%</span>
+      <span><i class="dot izin"></i>Izin ${s.breakdown.izin}%</span>
+      <span><i class="dot sakit" style="background:#0878e8"></i>Sakit ${s.breakdown.sakit}%</span>
+      <span><i class="dot tk" style="background:var(--red)"></i>Tanpa keterangan ${s.breakdown.tk}%</span>
+    </div><div class="muted" style="margin-top:6px">${s.possible} kesempatan</div></div>`).join("");
+  };
+  const monthly=[month], annual=Array.from({length:12},(_,i)=>i);
+  const m=summary("muda",monthly), f=summary("mudi",monthly);
+  const mt=summary("muda",annual), ft=summary("mudi",annual);
+  const combine=(a,b)=>{
+    const counts=Object.fromEntries(["hadir","izin","sakit","tk"].map(k=>[k,a.counts[k]+b.counts[k]]));
+    const possible=a.possible+b.possible;
+    const breakdown=Object.fromEntries(Object.entries(counts).map(([k,v])=>[k,possible?Math.round(v/possible*100):0]));
+    return {pct:possible?Math.round(counts.hadir/possible*100):0,counts,breakdown,possible};
+  };
+  renderStats("monthlyStats",[["Muda",m,"#16a765"],["Mudi",f,"#ed4264"],["Total",combine(m,f),"#0878e8"]]);
+  renderStats("annualStats",[["Muda",mt,"#16a765"],["Mudi",ft,"#ed4264"],["Total",combine(mt,ft),"#0878e8"]]);
+}
+function renderAttendance(){fillYears("attYear",year);monthOptions("attMonth",month);$("attYear").onchange=()=>{year=+$("attYear").value;renderAttendance()};$("attMonth").onchange=()=>{month=+$("attMonth").value;renderAttendance()};$("attTitle").textContent=group==="muda"?"Absensi Muda":"Absensi Mudi";$("monthLabel").textContent=months[month]+" "+year;let people=sortPeople(group),sched=allSchedule(year,month);$("personCount").textContent=people.length+" nama";let html=`<thead><tr><th>NO</th><th>NAMA</th>${sched.map(s=>`<th class="center datecol" title="${s.name}">${s.date.slice(8,10)}/${s.date.slice(5,7)}/${s.date.slice(0,4)}</th>`).join("")}<th>AKSI</th></tr></thead><tbody>`;if(!people.length)html+=`<tr><td colspan="${sched.length+3}" class="empty">Belum ada nama.</td></tr>`;people.forEach((p,i)=>{html+=`<tr><td>${i+1}</td><td>${p.name}</td>${sched.map(s=>{let st=data.attendance[`${group}|${p.id}|${key(year,month)}|${s.id}`]||"";if(st==="tk")st="";return `<td class="center"><button class="status ${st}" title="${statusName(st)||"Kosong — klik untuk mengisi"}" data-person="${p.id}" data-schedule="${s.id}"></button></td>`}).join("")}<td><button class="small danger" data-delete="${p.id}">Hapus</button></td></tr>`});html+="</tbody>";$("attendanceTable").innerHTML=html;document.querySelectorAll("[data-person]").forEach(btn=>btn.onclick=()=>{let p=btn.dataset.person,s=btn.dataset.schedule,k=`${group}|${p}|${key(year,month)}|${s}`,states=["","hadir","izin","sakit"];data.attendance[k]=states[(states.indexOf(data.attendance[k]||"")+1)%states.length];if(!data.attendance[k])delete data.attendance[k];save();renderAttendance()});document.querySelectorAll("[data-delete]").forEach(btn=>btn.onclick=()=>{let p=data.people[group].find(x=>x.id===btn.dataset.delete);if(confirm(`Hapus ${p.name} mulai ${months[month]} ${year}? Riwayat sebelumnya tetap ada.`)){p.to=key(year,month);save();renderAttendance()}})}
+function statusName(s){return {hadir:"Hadir",izin:"Izin",sakit:"Sakit"}[s]||""}
+$("addPerson").onclick=()=>{let n=prompt("Masukkan nama baru:");if(!n||!n.trim())return;let name=n.trim().toUpperCase();if(data.people[group].some(p=>p.name===name&&!p.to)){alert("Nama tersebut sudah ada.");return}data.people[group].push({id:"p"+Date.now(),name,from:key(year,month),to:null});save();renderAttendance()};
+function renderYears(){$("yearRows").innerHTML=data.years.slice().sort((a,b)=>a-b).map((y,i)=>`<tr><td>${i+1}</td><td>${y}</td><td><button class="small danger" data-y="${y}">Hapus</button></td></tr>`).join("");document.querySelectorAll("[data-y]").forEach(b=>b.onclick=()=>{let y=+b.dataset.y;if(!confirm(`Hapus tahun ${y} beserta jadwal dan absensinya?`))return;data.years=data.years.filter(v=>v!==y);Object.keys(data.schedules).filter(k=>k.startsWith(y+"-")).forEach(k=>delete data.schedules[k]);Object.keys(data.attendance).filter(k=>k.includes("|"+y+"-")).forEach(k=>delete data.attendance[k]);if(!data.years.length)data.years=[new Date().getFullYear()];year=data.years[0];save();renderYears()})}
+$("addYear").onclick=()=>{let y=Number(prompt("Masukkan tahun (contoh: 2027):"));if(!Number.isInteger(y)||y<1900||y>2200)return alert("Tahun tidak valid.");if(data.years.includes(y))return alert("Tahun sudah tersedia.");data.years.push(y);data.years.sort((a,b)=>a-b);save();renderYears()};
+function renderSchedule(){
+  fillYears("scheduleYear",year);
+  monthOptions("scheduleMonth",month);
+  $("scheduleYear").onchange=()=>{year=+$("scheduleYear").value;renderSchedule()};
+  $("scheduleMonth").onchange=()=>{month=+$("scheduleMonth").value;renderSchedule()};
+  $("scheduleLabel").textContent=months[month]+" "+year;
+  const dateInput=$("newScheduleDate");
+  dateInput.min=`${year}-${String(month+1).padStart(2,"0")}-01`;
+  dateInput.max=`${year}-${String(month+1).padStart(2,"0")}-${String(new Date(year,month+1,0).getDate()).padStart(2,"0")}`;
+  if(!dateInput.value || !validDate(dateInput.value,year,month)) dateInput.value=dateInput.min;
+  $("newScheduleName").value="";
+  const list=allSchedule(year,month);
+  $("scheduleRows").innerHTML=list.map((s,i)=>`<tr><td>${i+1}</td><td>${s.date.split("-").reverse().join("/")}</td><td>${s.name}</td><td><button class="small secondary" data-edit="${s.id}">Edit</button> <button class="small danger" data-sdel="${s.id}">Hapus</button></td></tr>`).join("")||`<tr><td colspan="4" class="empty">Belum ada jadwal untuk bulan ini.</td></tr>`;
+  document.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>editSchedule(b.dataset.edit));
+  document.querySelectorAll("[data-sdel]").forEach(b=>b.onclick=()=>{
+    if(confirm("Hapus jadwal ini?")){
+      const k=key(year,month);
+      data.schedules[k]=(data.schedules[k]||[]).filter(s=>s.id!==b.dataset.sdel);
+      save();renderSchedule();
+    }
+  });
+}
+function editSchedule(id){let list=data.schedules[key(year,month)]||[],s=list.find(x=>x.id===id);if(!s)return;let date=prompt("Tanggal (YYYY-MM-DD)",s.date);if(!date)return;let name=prompt("Nama kegiatan",s.name);if(name===null)return;if(!validDate(date,year,month))return alert("Tanggal harus berada pada bulan dan tahun yang dipilih.");s.date=date;s.name=name.trim()||"Kegiatan";save();renderSchedule()}
+function validDate(v,y,m){let d=new Date(v+"T00:00:00");return /^\d{4}-\d{2}-\d{2}$/.test(v)&&!isNaN(d)&&d.getFullYear()===y&&d.getMonth()===m}
+function addScheduleFromForm(){
+  const date=$("newScheduleDate").value;
+  const name=$("newScheduleName").value.trim();
+  if(!validDate(date,year,month)){alert("Pilih tanggal yang sesuai dengan bulan dan tahun.");return;}
+  if(!name){alert("Nama kegiatan harus diisi.");$("newScheduleName").focus();return;}
+  const k=key(year,month);
+  data.schedules[k]??=[];
+  data.schedules[k].push({id:"s"+Date.now(),date,name});
+  save();
+  renderSchedule();
+}
+$("addSchedule").onclick=()=>{showPage("schedule");$("newScheduleName").focus()};
+$("saveSchedule").onclick=addScheduleFromForm;
+$("newScheduleName").addEventListener("keydown",e=>{if(e.key==="Enter")addScheduleFromForm()});
+function applyLogo(src){data.logo=src;save();renderImages()}
+function renderImages(){
+  if(data.logo){
+    $("loginLogo").src=data.logo;$("loginLogo").classList.remove("hidden");$("loginLogoPlaceholder").classList.add("hidden");
+    $("sideLogo").innerHTML=`<img src="${data.logo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+    if($("profileLogoPreview")) $("profileLogoPreview").innerHTML=`<img src="${data.logo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+  }else{
+    $("loginLogo").classList.add("hidden");$("loginLogoPlaceholder").classList.remove("hidden");$("sideLogo").textContent="✦";
+    if($("profileLogoPreview")) $("profileLogoPreview").textContent="✦";
+  }
+  $("hero").style.backgroundImage=data.hero?`linear-gradient(90deg,#102b49bb,#102b4955),url("${data.hero}")`:"linear-gradient(100deg,#173e61,#397eb1)";
+}
+function upload(input,cb){$(input).onchange=e=>{let f=e.target.files[0];if(!f)return;if(f.size>3*1024*1024){alert("Ukuran gambar maksimal 3 MB.");return}let r=new FileReader();r.onload=()=>cb(r.result);r.readAsDataURL(f)}}
+["logoUpload","logoUploadSettings"].forEach(id=>upload(id,applyLogo));["heroUpload","heroUploadSettings"].forEach(id=>upload(id,src=>{data.hero=src;save();renderImages()}));$("removeLogo").onclick=()=>applyLogo(null);$("removeHero").onclick=()=>{data.hero=null;save();renderImages()};
+$("exportData").onclick=()=>{let blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="cadangan-absensi-muda-mudi.json";a.click();URL.revokeObjectURL(a.href)};
+$("importData").onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(!d.years||!d.people||!d.schedules||!d.attendance)throw Error();data=d;save();renderImages();showPage(page);alert("Cadangan berhasil diimpor.")}catch(err){alert("File cadangan tidak valid.")}};r.readAsText(f)};
+$("resetData").onclick=()=>{if(confirm("Reset semua data aplikasi? Tindakan ini tidak bisa dibatalkan.")){data=structuredClone(initial);save();renderImages();showPage("home")}};
+renderImages();fillYears("homeYear",year);monthOptions("homeMonth",month);fillYears("attYear",year);monthOptions("attMonth",month);fillYears("scheduleYear",year);monthOptions("scheduleMonth",month);
+$("supabaseUrl").value=localStorage.getItem("absenSupabaseUrl")||"";
+$("supabaseKey").value=localStorage.getItem("absenSupabaseKey")||"";
+$("saveSupabase").addEventListener("click",()=>{
+  const url=$("supabaseUrl").value.trim(), key=$("supabaseKey").value.trim();
+  if(!url || !key){setCloudStatus("Isi Project URL dan Publishable/anon key terlebih dahulu.");return;}
+  if(!/^https:\/\/[^\s]+\.supabase\.co\/?$/.test(url)){setCloudStatus("Project URL tidak valid. Contoh: https://xxxx.supabase.co");return;}
+  localStorage.setItem("absenSupabaseUrl",url.replace(/\/$/,""));
+  localStorage.setItem("absenSupabaseKey",key);
+  connectSupabase();
+  setCloudStatus("Konfigurasi tersimpan. Login ulang untuk menguji koneksi.");
+});
+</script>
+</body></html>
